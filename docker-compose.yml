@@ -6,9 +6,16 @@ services:
     container_name: ollaya-insights
     environment:
       OLLAYA_BASE_URL: http://host.docker.internal:11435
-      PORT: "8080"
+      PORT: "7001"
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-openai/gpt-4.1-mini}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GROQ_MODEL: ${GROQ_MODEL:-llama-3.3-70b-versatile}
+      AI_GATEWAY_MODELS: ${AI_GATEWAY_MODELS:-}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - "8080:8080"
+      - "7001:7001"
     restart: unless-stopped

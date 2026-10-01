@@ -41,6 +41,23 @@ docker compose logs -f insights
 docker compose down
 ```
 
+### AI Gateway e modelos externos
+
+O seletor de modelos inclui Ollaya local, OpenAI, OpenRouter e Groq. Provedores
+externos ficam desabilitados até receberem uma chave no backend. Copie
+`.env.example` para `.env`, preencha somente o provedor desejado e reconstrua:
+
+```sh
+cp .env.example .env
+# Edite .env sem compartilhar ou versionar as chaves.
+docker compose up --build -d
+```
+
+O arquivo `.env` é ignorado pelo Git e as chaves nunca são enviadas ao
+navegador. Para adicionar outro endpoint compatível com OpenAI, configure
+`AI_GATEWAY_MODELS` conforme o exemplo comentado em `.env.example` e repasse a
+variável de chave correspondente no `docker-compose.yml`.
+
 Para usar o modelo personalizado pela CLI:
 
 ```sh

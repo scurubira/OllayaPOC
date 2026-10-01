@@ -9,6 +9,8 @@ from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+from gateway import external_decide, get_model, public_models
+
 ROOT = Path(__file__).resolve().parent.parent
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 OLLAYA_URL = os.environ.get("OLLAYA_BASE_URL", "http://127.0.0.1:11435").rstrip("/")
@@ -53,7 +55,7 @@ def ollaya_request(path, payload=None, timeout=300):
         return json.load(response)
 
 
-def evaluate(profile, text):
+def evaluate(profile, text, model_id="local"):
     if profile not in PROFILES:
         raise ValueError("Perfil desconhecido.")
     if not isinstance(text, str) or not text.strip():
@@ -61,20 +63,26 @@ def evaluate(profile, text):
     if len(text) > MAX_TEXT_LENGTH:
         raise ValueError(f"O texto deve ter no máximo {MAX_TEXT_LENGTH} caracteres.")
 
+    model = get_model(model_id)
+    questions = load_questions(profile)
     start = time.perf_counter()
-    result = ollaya_request("/api/decide", {
-        "model": "laya:multilingual",
-        "state": text.strip(),
-        "questions": load_questions(profile),
-        "keep_alive": "10m",
-    })
-    if result.get("state_truncated"):
-        raise ValueError("O modelo truncou o texto. Reduza o conteúdo e tente novamente.")
+    if model["provider"] == "ollaya":
+        result = ollaya_request("/api/decide", {
+            "model": model["model"],
+            "state": text.strip(),
+            "questions": questions,
+            "keep_alive": "10m",
+        })
+        if result.get("state_truncated"):
+            raise ValueError("O modelo truncou o texto. Reduza o conteúdo e tente novamente.")
+    else:
+        result = external_decide(model, text.strip(), questions)
     return {
         "text": text.strip(),
         "elapsed_ms": round((time.perf_counter() - start) * 1000, 2),
         "answers": result.get("answers", {}),
         "usage": result.get("usage", {}),
+        "model": {"id": model["id"], "name": model["name"], "model": model["model"]},
     }
 
 
@@ -99,7 +107,11 @@ class Handler(SimpleHTTPRequestHandler):
             profiles = {}
             for key, profile in PROFILES.items():
                 profiles[key] = {**profile, "questions": load_questions(key)}
-            self.send_json({"profiles": profiles, "max_batch_size": MAX_BATCH_SIZE})
+            self.send_json({
+                "profiles": profiles,
+                "models": public_models(),
+                "max_batch_size": MAX_BATCH_SIZE,
+            })
             return
         if self.path == "/api/health":
             try:
@@ -124,6 +136,7 @@ class Handler(SimpleHTTPRequestHandler):
                 raise ValueError("Corpo da requisição vazio ou muito grande.")
             payload = json.loads(self.rfile.read(content_length))
             profile = payload.get("profile", "")
+            model_id = payload.get("model", "local")
             if "items" in payload:
                 items = payload["items"]
                 if not isinstance(items, list) or not 1 <= len(items) <= MAX_BATCH_SIZE:
@@ -131,17 +144,20 @@ class Handler(SimpleHTTPRequestHandler):
                 results = []
                 for index, item in enumerate(items):
                     text = item.get("texto", "") if isinstance(item, dict) else ""
-                    result = evaluate(profile, text)
+                    result = evaluate(profile, text, model_id)
                     result["title"] = item.get("titulo", f"Item {index + 1}")
                     results.append(result)
                 self.send_json({"profile": profile, "results": results})
                 return
-            self.send_json({"profile": profile, "result": evaluate(profile, payload.get("text", ""))})
+            self.send_json({
+                "profile": profile,
+                "result": evaluate(profile, payload.get("text", ""), model_id),
+            })
         except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
             self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode(errors="replace")
-            self.send_json({"error": f"Ollaya respondeu HTTP {exc.code}.", "detail": detail},
+            self.send_json({"error": f"O provedor respondeu HTTP {exc.code}.", "detail": detail},
                            HTTPStatus.BAD_GATEWAY)
         except (urllib.error.URLError, TimeoutError) as exc:
             self.send_json({"error": "Não foi possível acessar a Ollaya.", "detail": str(exc)},

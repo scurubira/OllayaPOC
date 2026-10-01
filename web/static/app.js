@@ -1,4 +1,4 @@
-const state = { config: null, profile: "futebol", lastResult: null, history: [] };
+const state = { config: null, profile: "futebol", model: "local", lastResult: null, history: [] };
 
 const samples = {
   triagem: [
@@ -41,6 +41,19 @@ function renderProfiles() {
       <strong>${profile.name}</strong><small>${profile.description}</small>
     </button>`).join("");
   nav.querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectProfile(button.dataset.profile)));
+}
+
+function renderModels() {
+  const select = $("#model-select");
+  select.innerHTML = state.config.models.map(model =>
+    `<option value="${model.id}" ${model.available ? "" : "disabled"}>${model.name} · ${model.model}${model.available ? "" : " (sem chave)"}</option>`
+  ).join("");
+  select.value = state.model;
+  updateModelBadge();
+}
+
+function updateModelBadge() {
+  $("#privacy-badge").textContent = state.model === "local" ? "Processamento local" : "Via gateway seguro";
 }
 
 function selectProfile(key) {
@@ -109,7 +122,7 @@ function answerCard(name, answer) {
 function renderSingle(result) {
   $("#result-content").className = "";
   $("#result-content").innerHTML = `<div class="insight-grid">${Object.entries(result.answers).map(([name, answer]) => answerCard(name, answer)).join("")}</div>`;
-  $("#elapsed-time").textContent = `${Math.round(result.elapsed_ms)} ms`;
+  $("#elapsed-time").textContent = `${result.model?.name || "Modelo"} · ${Math.round(result.elapsed_ms)} ms`;
   $("#result-actions").classList.remove("hidden");
 }
 
@@ -121,7 +134,7 @@ function renderBatch(results) {
       <div class="insight-grid">${Object.entries(result.answers).map(([name, answer]) => answerCard(name, answer)).join("")}</div>
     </details>`).join("")}</div>`;
   const total = results.reduce((sum, result) => sum + result.elapsed_ms, 0);
-  $("#elapsed-time").textContent = `${results.length} itens · ${Math.round(total)} ms`;
+  $("#elapsed-time").textContent = `${results[0]?.model?.name || "Modelo"} · ${results.length} itens · ${Math.round(total)} ms`;
   $("#result-actions").classList.remove("hidden");
 }
 
@@ -165,7 +178,7 @@ async function analyzeSingle() {
   const button = $("#analyze-button");
   setLoading(button, true);
   try {
-    const data = await request("/api/evaluate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ profile: state.profile, text }) });
+    const data = await request("/api/evaluate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ profile: state.profile, model: state.model, text }) });
     state.lastResult = data;
     renderSingle(data.result);
     addHistory(text, data);
@@ -180,7 +193,7 @@ async function analyzeBatch() {
   catch { return toast("O conteúdo não é um JSON válido."); }
   setLoading(button, true);
   try {
-    const data = await request("/api/evaluate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ profile: state.profile, items }) });
+    const data = await request("/api/evaluate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ profile: state.profile, model: state.model, items }) });
     state.lastResult = data;
     renderBatch(data.results);
     data.results.forEach(result => addHistory(result.title || result.text, { profile: state.profile, result }));
@@ -189,6 +202,10 @@ async function analyzeBatch() {
 }
 
 function bindEvents() {
+  $("#model-select").addEventListener("change", event => {
+    state.model = event.target.value;
+    updateModelBadge();
+  });
   $("#analysis-text").addEventListener("input", updateCharCount);
   $("#analysis-text").addEventListener("keydown", event => {
     if ((event.metaKey || event.ctrlKey) && event.key === "Enter") analyzeSingle();
@@ -232,6 +249,7 @@ async function init() {
   bindEvents();
   try {
     state.config = await request("/api/config");
+    renderModels();
     selectProfile(state.profile);
     checkHealth();
   } catch (error) { showError(error); }
