@@ -19,6 +19,28 @@ três exemplos grava respostas completas e tempos em `results/demo.json`.
 A primeira chamada inclui o carregamento do modelo; os tempos seguintes
 representam chamadas com o modelo já carregado.
 
+## Interface gráfica com Docker
+
+Com a API Ollaya iniciada no macOS, suba o dashboard:
+
+```sh
+./scripts/ollaya list
+docker compose up --build -d
+```
+
+Abra `http://localhost:8080`. A interface oferece os perfis de triagem,
+decisão executiva em telecom e futebol, com análise individual, lote JSON,
+histórico da sessão e exportação dos resultados.
+
+O contêiner contém apenas a aplicação web. Ele acessa a API e os modelos no
+host por `host.docker.internal:11435`, evitando copiar os modelos para a
+imagem. Para acompanhar ou encerrar:
+
+```sh
+docker compose logs -f insights
+docker compose down
+```
+
 Para usar o modelo personalizado pela CLI:
 
 ```sh
@@ -52,6 +74,22 @@ não constituem aprovação de investimento ou execução automática de ações
 
 Para chamar a função em Python: `decide(situacao, profile="telecom")`.
 O perfil padrão de triagem permanece disponível sem `--perfil`.
+
+## Futebol: Brasileirão e Libertadores
+
+O perfil `futebol` classifica perguntas e textos sobre Campeonato Brasileiro e
+Libertadores por competição, assunto e relevância. Também estima se a resposta
+exige dados atualizados e se faltam informações no texto.
+
+```sh
+python3 scripts/demo.py --perfil futebol
+python3 scripts/demo.py --perfil futebol 'Quais resultados podem alterar o G4 do Brasileirão nesta rodada?'
+python3 scripts/batch.py examples/futebol.json --perfil futebol -o results/futebol_batch.csv --json
+```
+
+As perguntas do perfil estão em `questions.futebol.json` e os dez casos de
+teste em `examples/futebol.json`. O modelo classifica o conteúdo fornecido, mas
+não consulta automaticamente resultados, tabelas ou escalações em tempo real.
 
 Para uma avaliação única com resumo executivo, use o script dedicado:
 

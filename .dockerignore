@@ -1,0 +1,10 @@
+.git
+.data
+.runtime
+results
+examples
+scripts
+__pycache__
+*.pyc
+.DS_Store
+README.md

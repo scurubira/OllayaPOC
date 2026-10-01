@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f0e9">
+  <title>Ollaya Insights</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">OI</span>
+        <div><strong>Ollaya</strong><small>Insights locais</small></div>
+      </div>
+      <nav aria-label="Perfis de análise">
+        <p class="nav-label">PERFIS</p>
+        <div id="profile-nav"></div>
+      </nav>
+      <div class="server-status" id="server-status">
+        <span class="status-dot"></span>
+        <div><strong>Verificando Ollaya</strong><small>API local</small></div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="profile-eyebrow">PERFIL</p>
+          <h1 id="profile-title">Carregando...</h1>
+          <p id="profile-description"></p>
+        </div>
+        <div class="top-actions">
+          <span class="privacy-badge">Processamento local</span>
+          <button class="icon-button" id="clear-history" title="Limpar histórico" aria-label="Limpar histórico">×</button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <section class="composer" aria-labelledby="input-title">
+          <div class="mode-tabs" role="tablist">
+            <button class="mode-tab active" data-mode="single" role="tab">Análise individual</button>
+            <button class="mode-tab" data-mode="batch" role="tab">Lote JSON</button>
+          </div>
+
+          <div id="single-panel" class="input-panel">
+            <div class="section-heading">
+              <div><span class="step">01</span><h2 id="input-title">Descreva o cenário</h2></div>
+              <span id="char-count">0 / 20.000</span>
+            </div>
+            <textarea id="analysis-text" maxlength="20000" placeholder="Cole uma notícia, chamado ou situação para analisar..."></textarea>
+            <div class="sample-row">
+              <span>Exemplos</span>
+              <div id="sample-prompts"></div>
+            </div>
+            <button class="primary-button" id="analyze-button">Executar análise</button>
+          </div>
+
+          <div id="batch-panel" class="input-panel hidden">
+            <div class="section-heading">
+              <div><span class="step">01</span><h2>Carregue a massa</h2></div>
+              <span>Máximo 50 itens</span>
+            </div>
+            <textarea id="batch-text" class="code-input" placeholder='[{"titulo":"Cenário 1","texto":"Descrição..."}]'></textarea>
+            <div class="batch-actions">
+              <label class="file-button">Abrir arquivo JSON<input id="batch-file" type="file" accept="application/json,.json"></label>
+              <button class="primary-button" id="batch-button">Processar lote</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="results-area" aria-live="polite">
+          <div class="section-heading result-heading">
+            <div><span class="step">02</span><h2>Insights</h2></div>
+            <div class="result-actions hidden" id="result-actions">
+              <span id="elapsed-time"></span>
+              <button class="text-button" id="download-button">Exportar JSON</button>
+            </div>
+          </div>
+          <div id="result-content" class="empty-state">
+            <div class="empty-glyph"><span></span><span></span><span></span></div>
+            <h3>Pronto para analisar</h3>
+            <p>Os resultados aparecem aqui, com escalas, probabilidades e contexto de cada resposta.</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="history-section">
+        <div class="section-heading">
+          <div><span class="step">03</span><h2>Histórico da sessão</h2></div>
+          <span id="history-count">0 análises</span>
+        </div>
+        <div id="history-list" class="history-list"><p class="muted">Nenhuma análise nesta sessão.</p></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

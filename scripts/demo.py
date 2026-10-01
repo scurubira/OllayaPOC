@@ -16,6 +16,7 @@ BASE_URL = "http://127.0.0.1:11435"
 PROFILES = {
     "triagem": ("questions.json", "examples/tickets.json", "demo.json"),
     "telecom": ("questions.telecom.json", "examples/telecom.json", "telecom.json"),
+    "futebol": ("questions.futebol.json", "examples/futebol.json", "futebol.json"),
 }
 
 
@@ -65,7 +66,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("texto", nargs="?", help="Chamado a classificar; omitido: executa os exemplos")
     parser.add_argument("--perfil", choices=PROFILES, default="triagem",
-                        help="Perguntas de triagem ou de apoio à decisão executiva em telecom")
+                        help="Perfil de perguntas: triagem, telecom ou futebol")
     args = parser.parse_args()
     if args.texto:
         print(json.dumps(decide(args.texto, args.perfil), ensure_ascii=False, indent=2))
@@ -74,7 +75,7 @@ def main():
     results = []
     for ticket in tickets:
         item = decide(ticket["texto"], args.perfil)
-        if args.perfil == "telecom":
+        if args.perfil != "triagem":
             results.append(item)
             answers = item["resposta"]["answers"]
             print(f"\n{ticket['titulo']} ({item['tempo_cliente_ms']:.0f} ms)")
@@ -90,9 +91,9 @@ def main():
     output = ROOT / "results" / PROFILES[args.perfil][2]
     output.parent.mkdir(exist_ok=True)
     output.write_text(json.dumps(results, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    if args.perfil == "telecom":
+    if args.perfil != "triagem":
         print(f"\nAvaliações: {len(results)}. Resultado completo: {output}")
-        print("Cenários fictícios. Classificações apoiam a análise; não autorizam ações ou investimentos.")
+        print("Classificações geradas pelo modelo; confirme fatos em fontes atualizadas.")
         return
     correct = sum(item["acertou"] for item in results)
     print(f"\nClassificação: {correct}/{len(results)} exemplos. Resultado: {output}")

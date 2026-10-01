@@ -1,0 +1,50 @@
+[
+  {
+    "titulo": "Interrupção regional de rede",
+    "texto": "Uma falha no backbone deixou 80 mil clientes sem internet há 50 minutos, incluindo hospitais e empresas. A redundância não entrou em operação. A engenharia estima quatro horas para recuperação. O diretor precisa coordenar rede, atendimento e comunicação e decidir a mobilização extraordinária de equipes."
+  },
+  {
+    "titulo": "Aumento de cancelamentos",
+    "texto": "O cancelamento mensal de clientes de fibra passou de 1,8% para 3,1% em três meses. As reclamações citam instabilidade e ofertas da concorrência. Comercial propõe descontos, mas não há análise da margem por segmento nem comprovação das causas dos cancelamentos. A diretoria precisa avaliar nesta semana uma resposta conjunta de rede e retenção."
+  },
+  {
+    "titulo": "Expansão de cobertura 5G",
+    "texto": "Uma operadora avalia investir R$ 25 milhões na expansão 5G para dez cidades. A equipe comercial relata demanda empresarial, mas ainda não há contratos, estudo de retorno, estimativa de custo operacional ou comparação com ampliar a fibra. O comitê de investimentos se reúne em duas semanas e precisa definir quais análises exigir antes de deliberar."
+  },
+  {
+    "titulo": "Incidente de segurança de dados",
+    "texto": "Vazamento parcial de dados de 5 mil clientes detectado em API pública. Engenharia já isolou o endpoint. DPO notificada. Imprensa pode noticiar nas próximas horas. É preciso avaliar notificação à ANPD, comunicação aos clientes e reforço de controles."
+  },
+  {
+    "titulo": "Queda de torres por temporal",
+    "texto": "Temporal derrubou 12 torres no interior de Minas Gerais. 18 mil clientes sem sinal há 2 horas. Equipes de campo em deslocamento. Não há estimativa de restabelecimento nem plano de comunicação para prefeituras afetadas."
+  },
+  {
+    "titulo": "Proposta de aquisição de rede regional",
+    "texto": "Competidor regional de fibra em crise oferece infraestrutura passiva por R$ 40 milhões. A área comercial vê oportunidade de ganhar 30 mil clientes, mas jurídico identifica dívidas trabalhistas e incertezas sobre titularidade de postes. O conselho quer uma recomendação em dez dias."
+  },
+  {
+    "titulo": "Reclamação recorrente de fatura",
+    "texto": "Setor de atendimento reporta aumento de 12% em chamados sobre valores divergentes na fatura do plano pós-pago. TI identifica bug pontual no cálculo de franquia. A correção está prevista para a próxima sprint."
+  },
+  {
+    "titulo": "Licitação de frequência 5G",
+    "texto": "Governo federal publicou edital para leilão de faixas de espectro em seis meses. A diretoria precisa decidir se participa, definir orçamento máximo e avaliar impacto na estratégia de cobertura dos próximos cinco anos."
+  },
+  {
+    "titulo": "Pane em data center principal",
+    "texto": "Falha elétrica no data center principal derrubou sistemas de ativação e billing. 200 mil clientes não conseguem alterar planos ou receber faturas. Gerador não entrou. Fornecedor de energia informa indisponibilidade de até 8 horas."
+  },
+  {
+    "titulo": "Campanha de migração para fibra",
+    "texto": "Marketing propõe campanha nacional de migração gratuita de clientes de cobre para fibra, com investimento estimado de R$ 8 milhões. A área de operações questiona capacidade de instalação e a financeira quer estimativa de churn evitado antes de aprovar."
+  },
+  {
+    "titulo": "Falha de roteamento internacional",
+    "texto": "Provedor upstream reporta congestionamento em rota internacional. Clientes corporativos relatam lentidão em aplicações em nuvem. Impacto é global, mas limitado a cerca de 2 mil clientes B2B. Alternativa de rota tem custo 40% maior."
+  },
+  {
+    "titulo": "Demanda de cidade não coberta",
+    "texto": "Prefeitura de cidade de 25 mil habitantes solicita proposta de conectividade para escolas e órgãos públicos. Não há infraestrutura da operadora na região. A área comercial quer saber se prioriza expansão orgânica ou parceria com provedor local."
+  }
+]

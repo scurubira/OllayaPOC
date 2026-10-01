@@ -1,0 +1,4 @@
+texto,departamento,urgencia,pede_reembolso,tempo_cliente_ms,departamento_esperado,acertou
+Fui cobrado duas vezes pela assinatura deste mês. Quero o reembolso da cobrança duplicada.,financeiro,1.5063,0.9892,68.05,financeiro,True
+Esqueci minha senha e preciso recuperar o acesso à minha conta.,conta,1.5642,0.9051,58.11,conta,True
+O sistema está fora do ar e retorna erro 500 para todos os usuários. Nossa operação está parada e precisamos resolver hoje.,suporte_tecnico,1.8849,0.9783,67.83,suporte_tecnico,True

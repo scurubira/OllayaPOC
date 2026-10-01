@@ -1,0 +1,43 @@
+{
+  "competicao": {
+    "type": "choice",
+    "instructions": "A qual competição principal o texto se refere?",
+    "criteria": {
+      "campeonato_brasileiro": "Campeonato Brasileiro Série A, incluindo jogos, tabela, classificação e disputa por título ou rebaixamento",
+      "libertadores": "CONMEBOL Libertadores, incluindo fases preliminares, grupos e mata-mata",
+      "ambas": "O texto compara ou relaciona diretamente Campeonato Brasileiro e Libertadores",
+      "outra_competicao": "O foco principal é outra competição",
+      "nao_identificada": "Não há informação suficiente para identificar a competição"
+    }
+  },
+  "assunto_principal": {
+    "type": "choice",
+    "instructions": "Qual é o assunto principal do texto de futebol?",
+    "criteria": {
+      "jogo_resultado": "Partida, placar, confronto, escalação ou resultado",
+      "classificacao": "Tabela, pontos, liderança, vaga, título ou rebaixamento",
+      "desempenho": "Análise de desempenho de clube, treinador ou jogador",
+      "elenco_mercado": "Contratações, transferências, lesões, suspensões ou composição do elenco",
+      "regulamento_calendario": "Regras, sorteios, datas, mando de campo ou calendário",
+      "outro": "Outro assunto relacionado a futebol"
+    }
+  },
+  "relevancia": {
+    "type": "score",
+    "instructions": "Qual é a relevância esportiva do fato descrito para a competição?",
+    "criteria": [
+      "Baixa: pouco efeito sobre a competição",
+      "Moderada: influencia uma rodada ou decisão local",
+      "Alta: afeta classificação, vaga, título ou rebaixamento",
+      "Decisiva: define classificação, eliminação, título ou rebaixamento"
+    ]
+  },
+  "exige_dados_atualizados": {
+    "type": "noul",
+    "instructions": "Responder corretamente exige consultar informações atuais, como tabela, resultado recente, escalação, lesão, suspensão ou calendário?"
+  },
+  "faltam_dados": {
+    "type": "noul",
+    "instructions": "Faltam dados essenciais no texto, como clubes, rodada, placar, data ou fase da competição, para produzir uma análise confiável?"
+  }
+}
