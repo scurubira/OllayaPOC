@@ -1,0 +1,31 @@
+{
+  "frente_prioritaria": {
+    "type": "choice",
+    "instructions": "Qual frente de gestão deve liderar a análise desta situação de uma operadora de telecom?",
+    "criteria": {
+      "continuidade_rede": "Restaurar disponibilidade, capacidade e qualidade da rede",
+      "retencao_clientes": "Reduzir cancelamentos e recuperar experiência dos clientes",
+      "expansao_investimento": "Avaliar expansão de cobertura e investimento em infraestrutura",
+      "seguranca": "Investigar incidente de segurança e proteger dados e sistemas",
+      "analise_adicional": "Faltam dados para identificar a frente prioritária"
+    }
+  },
+  "prioridade": {
+    "type": "score",
+    "instructions": "Com base no prazo e impacto descritos, qual a prioridade de atenção executiva?",
+    "criteria": ["Acompanhar na rotina", "Avaliar nesta semana", "Avaliar hoje", "Mobilizar imediatamente"]
+  },
+  "impacto_negocio": {
+    "type": "score",
+    "instructions": "Qual o impacto potencial da situação sobre operação, receita e clientes?",
+    "criteria": ["Impacto limitado e localizado", "Impacto relevante em parte da operação", "Impacto amplo em clientes ou receita", "Impacto crítico na continuidade do negócio"]
+  },
+  "requer_decisao_executiva": {
+    "type": "noul",
+    "instructions": "A situação requer decisão da diretoria por envolver várias áreas, impacto estratégico ou recursos fora da autonomia operacional."
+  },
+  "faltam_dados": {
+    "type": "noul",
+    "instructions": "Faltam informações essenciais sobre impacto, custos, alternativas ou causas para escolher uma ação definitiva."
+  }
+}

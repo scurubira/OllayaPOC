@@ -1,0 +1,15 @@
+#!/bin/sh
+set -eu
+POC_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+export OLLAYA_HOST=127.0.0.1:11435
+export OLLAYA_MODELS="$POC_ROOT/.data/models"
+export OLLAYA_LOG_DIR="$POC_ROOT/.data/logs"
+export OLLAYA_DEVICE=cpu
+export OLLAYA_MAX_LOADED_MODELS=1
+export OLLAYA_KEEP_ALIVE=10m
+mkdir -p "$OLLAYA_MODELS" "$OLLAYA_LOG_DIR"
+if [ ! -x "$POC_ROOT/.runtime/bin/ollaya" ]; then
+    echo 'Ollaya não instalado. Consulte README.md.' >&2
+    exit 1
+fi
+exec "$POC_ROOT/.runtime/bin/ollaya" "$@"

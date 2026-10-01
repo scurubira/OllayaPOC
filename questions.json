@@ -1,0 +1,21 @@
+{
+  "departamento": {
+    "type": "choice",
+    "instructions": "Qual equipe deve atender este chamado?",
+    "criteria": {
+      "financeiro": "Cobrança, pagamentos, faturas e reembolsos",
+      "suporte_tecnico": "Falhas do sistema, erros e indisponibilidade",
+      "conta": "Login, senha, perfil e acesso à conta"
+    }
+  },
+  "urgencia": {
+    "type": "score",
+    "instructions": "Qual é a urgência do chamado?",
+    "criteria": ["Pode aguardar", "Precisa de atenção nesta semana", "Precisa de atenção hoje"]
+  },
+  "pede_reembolso": {
+    "type": "noul",
+    "instructions": "O cliente solicita devolução de dinheiro.",
+    "criteria": {"true": "Solicita reembolso", "false": "Não solicita reembolso"}
+  }
+}

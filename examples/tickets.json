@@ -1,0 +1,5 @@
+[
+  {"texto": "Fui cobrado duas vezes pela assinatura deste mês. Quero o reembolso da cobrança duplicada.", "departamento_esperado": "financeiro"},
+  {"texto": "Esqueci minha senha e preciso recuperar o acesso à minha conta.", "departamento_esperado": "conta"},
+  {"texto": "O sistema está fora do ar e retorna erro 500 para todos os usuários. Nossa operação está parada e precisamos resolver hoje.", "departamento_esperado": "suporte_tecnico"}
+]

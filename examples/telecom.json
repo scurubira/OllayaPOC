@@ -1,0 +1,14 @@
+[
+  {
+    "titulo": "Interrupção regional de rede",
+    "texto": "Uma falha no backbone deixou 80 mil clientes sem internet há 50 minutos, incluindo hospitais e empresas. A redundância não entrou em operação. A engenharia estima quatro horas para recuperação. O diretor precisa coordenar rede, atendimento e comunicação e decidir a mobilização extraordinária de equipes."
+  },
+  {
+    "titulo": "Aumento de cancelamentos",
+    "texto": "O cancelamento mensal de clientes de fibra passou de 1,8% para 3,1% em três meses. As reclamações citam instabilidade e ofertas da concorrência. Comercial propõe descontos, mas não há análise da margem por segmento nem comprovação das causas dos cancelamentos. A diretoria precisa avaliar nesta semana uma resposta conjunta de rede e retenção."
+  },
+  {
+    "titulo": "Expansão de cobertura 5G",
+    "texto": "Uma operadora avalia investir R$ 25 milhões na expansão 5G para dez cidades. A equipe comercial relata demanda empresarial, mas ainda não há contratos, estudo de retorno, estimativa de custo operacional ou comparação com ampliar a fibra. O comitê de investimentos se reúne em duas semanas e precisa definir quais análises exigir antes de deliberar."
+  }
+]

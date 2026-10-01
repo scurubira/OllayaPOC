@@ -1,0 +1,3 @@
+FROM laya:multilingual
+QUESTIONS ./questions.json
+DESCRIPTION PoC de triagem de chamados em português
